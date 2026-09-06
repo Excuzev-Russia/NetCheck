@@ -10,6 +10,7 @@ source.include_exts = py,kv,png,jpg,atlas
 
 version = 0.1
 requirements = python3,kivy
+icon.filename = %(source.dir)s/file_0000000062f081f4a6596f9d31c0d497.png
 
 orientation = portrait
 fullscreen = 0
