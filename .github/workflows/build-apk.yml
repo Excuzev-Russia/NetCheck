@@ -1,0 +1,22 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build APK with Buildozer
+        run: |
+          docker run --rm --volume "$(pwd)":/home/user/hostcwd kivy/buildozer android debug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: netcheck-apk
+          path: bin/*.apk
