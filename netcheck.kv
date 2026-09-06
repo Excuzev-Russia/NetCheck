@@ -1,0 +1,233 @@
+#:kivy 2.1.0
+
+<TabButton@ToggleButton>:
+    group: "tabs"
+    allow_no_selection: False
+    background_normal: ""
+    background_down: ""
+    background_color: 0, 0, 0, 0
+    color: (0.9, 0.93, 0.95, 1) if self.state == "down" else (0.55, 0.6, 0.65, 1)
+    bold: True
+    font_size: "15sp"
+
+<SiteRow>:
+    size_hint_y: None
+    height: "64dp"
+    padding: "14dp"
+    spacing: "10dp"
+    canvas.before:
+        Color:
+            rgba: 0.086, 0.106, 0.137, 1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10]
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: root.site_name
+            bold: True
+            font_size: "16sp"
+            color: 0.9, 0.93, 0.95, 1
+            halign: "left"
+            valign: "middle"
+            text_size: self.size
+        Label:
+            text: root.site_domain
+            font_size: "12sp"
+            color: 0.55, 0.6, 0.65, 1
+            halign: "left"
+            valign: "top"
+            text_size: self.size
+    BoxLayout:
+        size_hint_x: None
+        width: "130dp"
+        spacing: "6dp"
+        Widget:
+            size_hint: None, None
+            size: "10dp", "10dp"
+            pos_hint: {"center_y": 0.5}
+            canvas:
+                Color:
+                    rgba: root.status_color
+                Ellipse:
+                    pos: self.pos
+                    size: self.size
+        Label:
+            text: root.status_text
+            font_size: "13sp"
+            color: 0.9, 0.93, 0.95, 1
+            halign: "left"
+            valign: "middle"
+            text_size: self.size
+
+<SitesScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: "16dp"
+        spacing: "10dp"
+        Label:
+            text: "Проверка доступности сервисов"
+            size_hint_y: None
+            height: "22dp"
+            font_size: "12sp"
+            color: 0.55, 0.6, 0.65, 1
+            halign: "left"
+            text_size: self.size
+        ScrollView:
+            BoxLayout:
+                id: site_list
+                orientation: "vertical"
+                spacing: "10dp"
+                size_hint_y: None
+                height: self.minimum_height
+        Button:
+            id: recheck_btn
+            text: "Проверить заново"
+            size_hint_y: None
+            height: "48dp"
+            background_normal: ""
+            background_color: 0.12, 0.15, 0.19, 1
+            color: 0.9, 0.93, 0.95, 1
+            bold: True
+            on_release: root.run_checks()
+        Label:
+            text: "«Нет связи» — нет интернета на устройстве. «Нет доступа» — сайт не отвечает. «Есть доступ» — сайт открывается."
+            size_hint_y: None
+            height: "50dp"
+            font_size: "11sp"
+            color: 0.55, 0.6, 0.65, 1
+            halign: "left"
+            valign: "top"
+            text_size: self.width, None
+
+<SpeedScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: "16dp"
+        spacing: "12dp"
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: None
+            height: "78dp"
+            padding: "16dp"
+            canvas.before:
+                Color:
+                    rgba: 0.086, 0.106, 0.137, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [12]
+            Label:
+                id: isp_name
+                text: "Определяем…"
+                bold: True
+                font_size: "18sp"
+                color: 0.9, 0.93, 0.95, 1
+                halign: "left"
+                valign: "middle"
+                text_size: self.size
+            Label:
+                id: isp_region
+                text: "—"
+                font_size: "13sp"
+                color: 0.55, 0.6, 0.65, 1
+                halign: "left"
+                valign: "top"
+                text_size: self.size
+        BoxLayout:
+            size_hint_y: None
+            height: "90dp"
+            spacing: "1dp"
+            canvas.before:
+                Color:
+                    rgba: 0.086, 0.106, 0.137, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [12]
+            BoxLayout:
+                orientation: "vertical"
+                padding: "6dp"
+                Label:
+                    id: m_ping
+                    text: "—"
+                    bold: True
+                    font_size: "20sp"
+                    color: 0.9, 0.93, 0.95, 1
+                Label:
+                    text: "мс · Пинг"
+                    font_size: "11sp"
+                    color: 0.55, 0.6, 0.65, 1
+            BoxLayout:
+                orientation: "vertical"
+                padding: "6dp"
+                Label:
+                    id: m_down
+                    text: "—"
+                    bold: True
+                    font_size: "20sp"
+                    color: 0.9, 0.93, 0.95, 1
+                Label:
+                    text: "Мбит/с · Загрузка"
+                    font_size: "11sp"
+                    color: 0.55, 0.6, 0.65, 1
+            BoxLayout:
+                orientation: "vertical"
+                padding: "6dp"
+                Label:
+                    id: m_up
+                    text: "—"
+                    bold: True
+                    font_size: "20sp"
+                    color: 0.9, 0.93, 0.95, 1
+                Label:
+                    text: "Мбит/с · Отдача"
+                    font_size: "11sp"
+                    color: 0.55, 0.6, 0.65, 1
+        Button:
+            id: speed_btn
+            text: "Запустить тест скорости"
+            size_hint_y: None
+            height: "48dp"
+            background_normal: ""
+            background_color: 0.12, 0.15, 0.19, 1
+            color: 0.9, 0.93, 0.95, 1
+            bold: True
+            on_release: root.run_speed_test()
+        Label:
+            text: "Провайдер и регион определяются автоматически. Тест скорости расходует трафик — запускайте вручную."
+            size_hint_y: None
+            height: "40dp"
+            font_size: "11sp"
+            color: 0.55, 0.6, 0.65, 1
+            halign: "left"
+            valign: "top"
+            text_size: self.width, None
+        Widget:
+
+<RootWidget>:
+    orientation: "vertical"
+    canvas.before:
+        Color:
+            rgba: 0.051, 0.063, 0.086, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        size_hint_y: None
+        height: "48dp"
+        padding: ["16dp", "0dp"]
+        TabButton:
+            text: "Сайты"
+            state: "down"
+            on_release: sm_ref.current = "sites"
+        TabButton:
+            text: "Скорость"
+            on_release: sm_ref.current = "speed"
+    ScreenManager:
+        id: sm_ref
+        SitesScreen:
+            name: "sites"
+        SpeedScreen:
+            name: "speed"
